@@ -50,6 +50,7 @@ function init() {
   camera.lookAt(6, 10, -6);
 
   // testing new branch
+  camera.lookAt(10, 10, 10);
 
 
   // lighting
