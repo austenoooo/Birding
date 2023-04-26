@@ -37,9 +37,7 @@ function init() {
   // document.getElementById("environment").appendChild(renderer.domElement);
   document.body.appendChild(renderer.domElement);
 
-  // background color
-  let backgroundColor = new THREE.Color(0xE0FFEF);
-  renderer.setClearColor(backgroundColor);
+  
 
   camera = new THREE.PerspectiveCamera(
     75,
@@ -51,16 +49,18 @@ function init() {
   camera.position.set(-6, 10, 6);
   camera.lookAt(6, 10, -6);
 
+  // testing new branch
+
 
   // lighting
-  const light = new THREE.AmbientLight( 0xd9ffe2, 0.5); // soft white light
+  const light = new THREE.AmbientLight( 0xffffff, 0.5); // soft white light
   scene.add( light ); 
 
   var hemiLight = new THREE.HemisphereLight( 0xffff85, 0xffff85, 0.6 );
   hemiLight.position.set( 0, 500, 0 );
   scene.add( hemiLight );
 
-  var dirLight = new THREE.DirectionalLight( 0xffffed, 1 );
+  var dirLight = new THREE.DirectionalLight( 0xffffed, 0.5 );
   dirLight.position.set( -1, 0.75, 1 );
   dirLight.position.multiplyScalar( 50);
   scene.add( dirLight );
@@ -79,6 +79,10 @@ function init() {
   environmentMap();
   
 
+  // background color
+  let backgroundColor = new THREE.Color(0xE0FFEF);
+  renderer.setClearColor(backgroundColor);
+
   loop();
 
 }
@@ -89,6 +93,7 @@ function environmentMap() {
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.environment = texture;
     environment = texture;
+    // scene.background = texture;
     loadForestModel();
   });
 }
