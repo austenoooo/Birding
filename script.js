@@ -26,6 +26,10 @@ let prevTime = performance.now();
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
 
+let cameraZoomed = false;
+
+const binocularView = document.getElementById("binocular");
+
 function init() {
   scene = new THREE.Scene();
 
@@ -84,6 +88,7 @@ function init() {
   // controls = new OrbitControls(camera, renderer.domElement);
 
   createControl();
+  createBinocular();
 
   environmentMap();
   
@@ -119,6 +124,40 @@ function environmentMap() {
     birds.push(RedwingedBlackBird);
     
   });
+}
+
+function createBinocular(){
+
+  document.addEventListener("keydown", (e) => {
+    if (e.code == "Space"){
+      zoomCamera();
+    }
+  });
+}
+
+
+
+function zoomCamera(){
+
+  // camera wasn't zoomed 
+  if (!cameraZoomed){
+    // camera.zoom = 5;
+    // camera.updateProjectionMatrix();
+    cameraZoomed = true;
+
+    // show binocular
+    binocularView.style.opacity = 1;
+  }
+  // camera was zoomed
+  else{
+    // camera.zoom = 1;
+    // camera.updateProjectionMatrix();
+    cameraZoomed = false;
+
+    // hide binocular
+    binocularView.style.opacity = 0;
+  }
+  
 }
 
 
@@ -268,6 +307,16 @@ function loop() {
     controls.moveForward(-velocity.z * delta);
     
     // TODO: Confine the camera position between -15 to 15
+  }
+
+  // update the camera zoom
+  if (cameraZoomed){
+    camera.zoom = camera.zoom + (5 - camera.zoom) / 2;
+    camera.updateProjectionMatrix();
+  }
+  else{
+    camera.zoom = camera.zoom - (camera.zoom - 1) / 2;
+    camera.updateProjectionMatrix();
   }
 
 

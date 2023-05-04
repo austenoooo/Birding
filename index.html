@@ -12,6 +12,15 @@
         padding: 0;
       }
 
+      #binocular{
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 300ms ease;
+      }
+
     </style>
 
   </head>
@@ -34,6 +43,8 @@
     <script type="module" src="script.js"></script>
 
     <div id="environment"></div>
+
+    <img id="binocular" src="./textures/binocular.png">
     
   
   </body>
