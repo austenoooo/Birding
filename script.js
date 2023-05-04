@@ -7,7 +7,11 @@ import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
 import {Bird} from "./Bird.js";
 
-let scene, camera, renderer;
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+
+let scene, camera, renderer, composer;
 // models
 let forest;
 let birds = [];
@@ -29,6 +33,10 @@ const direction = new THREE.Vector3();
 let cameraZoomed = false;
 
 const binocularView = document.getElementById("binocular");
+
+const postprocessing = {};
+
+
 
 function init() {
   scene = new THREE.Scene();
@@ -92,10 +100,29 @@ function init() {
 
   environmentMap();
   
-  
+  initPostprocessing();
+  renderer.autoClear = false;
 
   loop();
 
+}
+
+function initPostprocessing() {
+  const renderPass = new RenderPass( scene, camera );
+
+  const bokehPass = new BokehPass( scene, camera, {
+    focus: 3,
+    aperture: 0.0002,
+    maxblur: 0.005
+  } );
+
+  const composer = new EffectComposer( renderer );
+
+  composer.addPass( renderPass );
+  composer.addPass( bokehPass );
+
+  postprocessing.composer = composer;
+  postprocessing.bokeh = bokehPass;
 }
 
 function environmentMap() {
@@ -322,7 +349,8 @@ function loop() {
 
   prevTime = time;
 
-  renderer.render(scene, camera);
+  // renderer.render(scene, camera);
+  postprocessing.composer.render( 0.1 );
 
   window.requestAnimationFrame(loop);
 
