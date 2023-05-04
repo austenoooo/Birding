@@ -5,10 +5,12 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { FBXLoader } from 'three/addons/loaders/FBXLoader'
 import { RGBELoader } from "three/addons/loaders/RGBELoader.js";
 import { PointerLockControls } from "three/addons/controls/PointerLockControls.js";
+import {Bird} from "./Bird.js";
 
 let scene, camera, renderer;
 // models
 let forest;
+let birds = [];
 
 let environment;
 
@@ -48,8 +50,15 @@ function init() {
     1000
   );
 
-  camera.position.set(-6, 10, 6);
+  camera.position.set(-5.5, 10, 5.5);
   camera.lookAt(6, 10, -6);
+
+  // zoom camera
+  // camera.zoom = 3;
+  // camera.updateProjectionMatrix();
+
+  // camera.position.set(-1, 1.5, -1);
+  // camera.lookAt(0, 0, 0);
 
 
   // lighting
@@ -60,7 +69,7 @@ function init() {
   hemiLight.position.set( 0, 500, 0 );
   scene.add( hemiLight );
 
-  var dirLight = new THREE.DirectionalLight( 0xffffed, 1 );
+  var dirLight = new THREE.DirectionalLight( 0xffffed, 1);
   dirLight.position.set( -1, 0.75, 1 );
   dirLight.position.multiplyScalar( 50);
   scene.add( dirLight );
@@ -78,6 +87,7 @@ function init() {
 
   environmentMap();
   
+  
 
   loop();
 
@@ -89,9 +99,28 @@ function environmentMap() {
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.environment = texture;
     environment = texture;
+
+    // scene.background = texture;
+    
+
+
     loadForestModel();
+    
+    let americanRobin = new Bird(0, 5, 0, 0, scene, "American_Robin");
+    birds.push(americanRobin);
+
+    let northernCardinal = new Bird(3.2, 6, 4.8, Math.PI / 6, scene, "Northern_Cardinal");
+    birds.push(northernCardinal);
+
+    let blueJay = new Bird(-1, 5, -1, 0, scene, "Blue_Jay");
+    birds.push(blueJay);
+
+    let RedwingedBlackBird = new Bird(-1, 5, 0, 0, scene, "Red-winged_Black_Bird");
+    birds.push(RedwingedBlackBird);
+    
   });
 }
+
 
 function loadForestModel() {
 
@@ -124,10 +153,11 @@ function loadForestModel() {
     normalMap: forestNormal,
     aoMap: forestOcculusion,
     specularMap: forestSpecular,
-    shininess: 200,
+    shininess: 0,
     envMap: environment,
     // transparent: true,
     alphaTest: 0.5,
+    reflectivity: 0.8
   })
   
 
