@@ -40,6 +40,8 @@ const binocularView = document.getElementById("binocular");
 
 const postprocessing = {};
 
+let audioListener;
+
 function init() {
   scene = new THREE.Scene();
 
@@ -67,13 +69,6 @@ function init() {
   camera.position.set(-5.5, 10, 5.5);
   camera.lookAt(6, 10, -6);
 
-  // zoom camera
-  // camera.zoom = 3;
-  // camera.updateProjectionMatrix();
-
-  // camera.position.set(-1, 1.5, -1);
-  // camera.lookAt(0, 0, 0);
-
   // lighting
   const light = new THREE.AmbientLight(0xd9ffe2, 0.5); // soft white light
   scene.add(light);
@@ -87,20 +82,9 @@ function init() {
   dirLight.position.multiplyScalar(50);
   scene.add(dirLight);
 
-  
-  // var dirLight2 = new THREE.DirectionalLight(0xffffed, 1);
-  // dirLight2.position.set(1, 0.75, 1);
-  // dirLight2.position.multiplyScalar(50);
-  // scene.add(dirLight2);
 
-
-  // helper functions
-  const axesHelper = new THREE.AxesHelper(30);
-  // scene.add(axesHelper);
-  const gridHelper = new THREE.GridHelper(200, 200);
-  // scene.add(gridHelper);
-
-  // controls = new OrbitControls(camera, renderer.domElement);
+  audioListener = new THREE.AudioListener();
+  scene.add(audioListener);
 
   createControl();
   createBinocular();
@@ -143,10 +127,9 @@ function environmentMap() {
     loadForestModel();
 
     loadBird(0, 5, 0, 0, "American_Robin");
-    loadBird(3.2, 6, 4.8, Math.PI/6, "Northern_Cardinal");
+    loadBird(3.2, 6, 4.8, Math.PI / 6, "Northern_Cardinal", true);
     loadBird(-1, 5, -1, 0, "Blue_Jay");
     loadBird(-1, 5, 0, 0, "Red-winged_Black_Bird");
-
   });
 }
 
@@ -176,46 +159,61 @@ function zoomCamera() {
 }
 
 function createBirdIntesection() {
-
   // center of the screen
   let mouse = new THREE.Vector2(0, 0);
-
 
   let rayCaster = new THREE.Raycaster();
   document.addEventListener("click", (e) => {
     rayCaster.setFromCamera(mouse, camera);
     const intersects = rayCaster.intersectObjects(birdModels);
 
-    if (intersects.length > 0){
+    if (intersects.length > 0) {
       console.log(intersects[0].object.name);
     }
-    
   });
 }
 
-function loadBird(x, y, z, angle, birdName){
+function loadBird(x, y, z, angle, birdName, enableSound = false) {
   const gltfLoader = new GLTFLoader();
 
-    // load the place the model in the environment
-    gltfLoader.load("./model/" + birdName + ".gltf", function (gltf) {
-      let model = gltf.scene;
-  
-      model.traverse(function (object){
-        if (object.isMesh){
-          object.material.metalness = 0.8;
-          object.material.roughness = 0.2;
-          object.name = birdName;
-        }
-      });
-  
-      model.scale.set(0.5, 0.5, 0.5);
-      model.position.set(x, y, z);
-      model.rotation.set(0, Math.PI / 2 + angle, 0);
-      scene.add(model);
-      
-      birdNames.push(birdName);
-      birdModels.push(model);
+  // load the place the model in the environment
+  gltfLoader.load("./model/" + birdName + ".gltf", function (gltf) {
+    let model = gltf.scene;
+
+    model.traverse(function (object) {
+      if (object.isMesh) {
+        object.material.metalness = 0.8;
+        object.material.roughness = 0.2;
+        object.name = birdName;
+      }
     });
+
+    model.scale.set(0.5, 0.5, 0.5);
+    model.position.set(x, y, z);
+    model.rotation.set(0, Math.PI / 2 + angle, 0);
+    scene.add(model);
+
+    if (enableSound) {
+    
+      const audioLoader = new THREE.AudioLoader();
+
+      let audioSource = new THREE.PositionalAudio(audioListener);
+
+      audioLoader.load("audio/" + birdName + ".wav", function (buffer) {
+        audioSource.setBuffer(buffer);
+        audioSource.setDistanceModel("exponential");
+        audioSource.setRefDistance(3);
+        audioSource.setRolloffFactor(2);
+        audioSource.setLoop(true);
+        audioSource.play();
+      });
+
+      model.add(audioSource);
+    }
+
+    birdNames.push(birdName);
+    birdModels.push(model);
+  });
 }
 
 function loadForestModel() {
@@ -336,11 +334,10 @@ function createControl() {
 }
 
 function loop() {
-  if (birdNames.length == birdNum && !birdIntersection){
+  if (birdNames.length == birdNum && !birdIntersection) {
     createBirdIntesection();
     birdIntersection = true;
   }
-
 
   const time = performance.now();
 
@@ -377,6 +374,13 @@ function loop() {
   }
 
   prevTime = time;
+
+  // make the audio listener follow the orbit control
+  audioListener.position.set(
+    Math.round(controls.getObject().position.x),
+    Math.round(controls.getObject().position.y),
+    Math.round(controls.getObject().position.z)
+  );
 
   // renderer.render(scene, camera);
   postprocessing.composer.render(0.1);
