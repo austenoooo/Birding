@@ -46,7 +46,7 @@ function init() {
   scene = new THREE.Scene();
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth - 40 * 2, window.innerHeight - 40 * 2);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 
   // enable shadow
   renderer.outputEncoding = THREE.sRGBEncoding;
@@ -66,8 +66,11 @@ function init() {
     1000
   );
 
-  camera.position.set(-5.5, 10, 5.5);
-  camera.lookAt(6, 10, -6);
+  // camera.position.set(-5.5, 10, 5.5);
+  // camera.lookAt(6, 10, -6);
+  camera.position.set(0, 20, 10);
+  camera.lookAt(0, 20, 0);
+  
 
   // lighting
   const light = new THREE.AmbientLight(0xd9ffe2, 0.5); // soft white light
@@ -125,11 +128,6 @@ function environmentMap() {
     // scene.background = texture;
 
     loadForestModel();
-
-    loadBird(0, 5, 0, 0, "American_Robin");
-    loadBird(3.2, 6, 4.8, Math.PI / 6, "Northern_Cardinal", true);
-    loadBird(-1, 5, -1, 0, "Blue_Jay");
-    loadBird(-1, 5, 0, 0, "Red-winged_Black_Bird", true);
   });
 }
 
@@ -191,7 +189,7 @@ function loadBird(x, y, z, angle, birdName, enableSound = false) {
     model.scale.set(0.5, 0.5, 0.5);
     model.position.set(x, y, z);
     model.rotation.set(0, Math.PI / 2 + angle, 0);
-    scene.add(model);
+    forest.add(model);
 
     if (enableSound) {
     
@@ -260,6 +258,13 @@ function loadForestModel() {
         object.castShadow = true;
         object.receiveShadow = true;
       }
+
+      loadBird(0, 5, 0, 0, "American_Robin");
+      loadBird(3.2, 6, 4.8, Math.PI / 6, "Northern_Cardinal", true);
+      loadBird(-1, 5, -1, 0, "Blue_Jay");
+      loadBird(-1, 5, 0, 0, "Red-winged_Black_Bird", true);
+
+
     });
 
     forest.position.set(0, 0, 0);
@@ -381,7 +386,8 @@ function loop() {
     Math.round(controls.getObject().position.y),
     Math.round(controls.getObject().position.z)
   );
-
+  
+ 
   // renderer.render(scene, camera);
   postprocessing.composer.render(0.1);
 
