@@ -46,14 +46,14 @@ function init() {
   scene = new THREE.Scene();
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth - 40 * 2, window.innerHeight - 40 * 2);
 
   // enable shadow
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
-  // document.getElementById("environment").appendChild(renderer.domElement);
-  document.body.appendChild(renderer.domElement);
+  document.getElementById("environment").appendChild(renderer.domElement);
+  // document.body.appendChild(renderer.domElement);
 
   // background color
   let backgroundColor = new THREE.Color(0xe0ffef);
@@ -129,7 +129,7 @@ function environmentMap() {
     loadBird(0, 5, 0, 0, "American_Robin");
     loadBird(3.2, 6, 4.8, Math.PI / 6, "Northern_Cardinal", true);
     loadBird(-1, 5, -1, 0, "Blue_Jay");
-    loadBird(-1, 5, 0, 0, "Red-winged_Black_Bird");
+    loadBird(-1, 5, 0, 0, "Red-winged_Black_Bird", true);
   });
 }
 
