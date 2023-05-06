@@ -383,6 +383,15 @@ function loop() {
     camera.updateProjectionMatrix();
   }
 
+  // update camera position when game start
+  // camera y value change from 19 to 10
+  if (gameStart){
+    if (camera.position.y > 10){
+      camera.position.y = camera.position.y - (camera.position.y - 10) / 30;
+      camera.updateProjectionMatrix();
+    }
+  }
+
   prevTime = time;
 
   // make the audio listener follow the orbit control
@@ -400,3 +409,15 @@ function loop() {
 }
 
 init();
+
+
+
+
+
+const startButton = document.getElementById("start-game");
+const startPage = document.getElementById("start-page");
+
+startButton.addEventListener("click", () => {
+    gameStart = true;
+    startPage.style.top = "-100vh";
+});

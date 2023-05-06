@@ -24,6 +24,7 @@
 
       :root {
         --neo-green: #ADFF00;
+        --neo-green-sheer: rgba(173, 255, 0, 0.2);
       }
 
 
@@ -43,6 +44,7 @@
         padding: 0;
         height: 100%;
         overflow: hidden;
+        font-family: Rubik;
       }
 
       #binocular{
@@ -68,16 +70,39 @@
 
       #start-page{
         position: absolute;
-        top: 0;
+        top: 0vh;
+        transition: top 1000ms ease-out;
       }
 
       #game-title{
         width: 100vw;
         font-family: RubikDirt;
-        font-size: 6rem;
+        font-size: 7rem;
         color: var(--neo-green);
         text-align: center;
         margin-top: 35vh;
+      }
+
+      #start-game{
+        font-weight: 500;
+        margin-left: calc(50vw - 60px);
+        width: 120px;
+        height: 40px;
+        background-color: var(--neo-green-sheer);
+        border-radius: 25px;
+        border: var(--neo-green) 2px solid;
+      }
+
+      #start-game:hover{
+        cursor: pointer;
+      }
+      
+      #start{
+        margin-top: 8px;
+        margin-left: 30px;
+        color: var(--neo-green);
+        font-size: 1.2rem;
+        font-family: Rubik;
       }
     </style>
 
@@ -99,6 +124,7 @@
     </script>
 
     <script type="module" src="script.js"></script>
+    
 
     <div id="game-frame">
       <div id="environment"></div>
@@ -107,7 +133,9 @@
 
     <div id="start-page">
       <h1 id="game-title">BIRDING <br> QUEST</h1>
-      <div id="start-game">START</div>
+      <div id="start-game">
+        <p id="start">START</p>
+      </div>
     </div>
   
   </body>
