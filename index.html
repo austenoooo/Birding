@@ -2,6 +2,31 @@
 <html>
   <head> 
     <style>
+      @font-face {
+        font-family: Rubik;
+        src: url(./fonts/Rubik.ttf);
+      }
+
+      @font-face {
+        font-family: RubikDirt;
+        src: url(./fonts/RubikDirt-Regular.ttf);
+      }
+
+      @font-face {
+        font-family: RubikIso;
+        src: url(./fonts/RubikIso-Regular.ttf);
+      }
+
+      @font-face {
+        font-family: RubikMonoOne;
+        src: url(./fonts/RubikMonoOne-Regular.ttf);
+      }
+
+      :root {
+        --neo-green: #ADFF00;
+      }
+
+
       #environment{
         width: 100%;
         height: 100%;
@@ -40,6 +65,20 @@
         overflow: hidden;
         border: #00522c 8px solid;
       } */
+
+      #start-page{
+        position: absolute;
+        top: 0;
+      }
+
+      #game-title{
+        width: 100vw;
+        font-family: RubikDirt;
+        font-size: 6rem;
+        color: var(--neo-green);
+        text-align: center;
+        margin-top: 35vh;
+      }
     </style>
 
   </head>
@@ -64,6 +103,11 @@
     <div id="game-frame">
       <div id="environment"></div>
       <img id="binocular" src="./textures/binocular_2.png">
+    </div>
+
+    <div id="start-page">
+      <h1 id="game-title">BIRDING <br> QUEST</h1>
+      <div id="start-game">START</div>
     </div>
   
   </body>
