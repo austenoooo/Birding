@@ -68,8 +68,8 @@ function init() {
 
   // camera.position.set(-5.5, 10, 5.5);
   // camera.lookAt(6, 10, -6);
-  camera.position.set(0, 20, 10);
-  camera.lookAt(0, 20, 0);
+  camera.position.set(0, 19, 10);
+  camera.lookAt(0, 19, 0);
   
 
   // lighting
