@@ -297,9 +297,9 @@ function loadForestModel() {
         object.receiveShadow = true;
       }
 
-      loadBird(0.5, 5, -1, Math.PI / 3, "American_Robin");
+      loadBird(0.5, 5, -1, Math.PI / 3, "American_Robin", true);
       loadBird(3, 14, -4.5, Math.PI, "Northern_Cardinal", true);
-      loadBird(-5, 13, -8, Math.PI / 6, "Blue_Jay");
+      loadBird(-5, 13, -8, Math.PI / 6, "Blue_Jay", true);
       loadBird(8.2, 9, 6.8, -Math.PI / 6, "Red-winged_Black_Bird", true);
       startPageModel();
 
