@@ -281,9 +281,9 @@ function loadForestModel() {
       }
 
       loadBird(0.5, 5, -1, Math.PI / 3, "American_Robin");
-      loadBird(6.3, -3.6, 5, Math.PI / 6, "Northern_Cardinal", true);
+      loadBird(3, 14, -4.5, Math.PI, "Northern_Cardinal", true);
       loadBird(-5, 13, -8, Math.PI / 6, "Blue_Jay");
-      loadBird(-1, 5, 0, 0, "Red-winged_Black_Bird", true);
+      loadBird(8.2, 9, 6.8, -Math.PI / 6, "Red-winged_Black_Bird", true);
 
 
     });
