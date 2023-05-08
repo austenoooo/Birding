@@ -57,16 +57,10 @@
         transition: opacity 300ms ease;
       }
 
-      /* #game-frame{
+      #game-frame{
         position: absolute;
-        top: 40px;
-        left: 40px;
-        height: calc(100vh - 40px * 2);
-        width: calc(100vw - 40px * 2);
-        border-radius: 40px;
-        overflow: hidden;
-        border: #00522c 8px solid;
-      } */
+        z-index: -1;
+      }
 
       #start-page{
         position: absolute;
@@ -81,6 +75,7 @@
         color: var(--neo-green);
         text-align: center;
         margin-top: 35vh;
+        text-shadow: 2px 2px 4px #000000;
       }
 
       #start-game{
@@ -91,6 +86,7 @@
         background-color: var(--neo-green-sheer);
         border-radius: 25px;
         border: var(--neo-green) 2px solid;
+        box-shadow: 2px 2px 4px #000000;
       }
 
       #start-game:hover{
@@ -104,6 +100,49 @@
         font-size: 1.2rem;
         font-family: Rubik;
       }
+
+      #bird-info{
+        position: absolute;
+        top: 0;
+        /* z-index: 2; */
+        opacity: 0;
+        transition: opacity 3000ms ease-in-out;
+      }
+
+      #bird-info-image{
+        position: absolute;
+        width: 60vw;
+        height: 34.3vw;
+        left: 20vw;
+        top: calc((100vh - 34.3vw) / 2);
+        box-shadow: 2px 2px 4px #000000;
+        border-radius: 20px;
+        -webkit-user-drag: none;
+        user-select: none;
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+      }
+
+      #close-button{
+        width: 70px;
+        height: 70px;
+        border-radius: 50px;
+        border: var(--neo-green) 3px solid;
+        background-color: var(--neo-green-sheer);
+        position: absolute;
+        top: calc((100vh - 34.3vw) / 2);
+        left: calc(80vw + 20px);
+        box-shadow: 2px 2px 4px #000000;
+      }
+
+      #close-icon{
+        width: 20px;
+        height: 20px;
+        margin-top: 25px;
+        margin-left: 25px;
+      }
+
     </style>
 
   </head>
@@ -131,12 +170,21 @@
       <img id="binocular" src="./textures/binocular_2.png">
     </div>
 
+    <div id="bird-info">
+      <img src="./textures/Northern_Cardinal.png" id="bird-info-image">
+      <div id="close-button">
+        <img src="./textures/close.png" id="close-icon">
+      </div>
+    </div>
+
     <div id="start-page">
       <h1 id="game-title">BIRDING <br> QUEST</h1>
       <div id="start-game">
         <p id="start">START</p>
       </div>
     </div>
+
+    
   
   </body>
 </html>

@@ -18,7 +18,6 @@ let scene, camera, renderer, composer;
 // models
 let forest;
 let birdModels = [];
-let birdNames = [];
 
 let birdNum = 4;
 let birdIntersection = false;
@@ -71,8 +70,8 @@ function init() {
 
   // camera.position.set(-5.5, 10, 5.5);
   // camera.lookAt(6, 10, -6);
-  camera.position.set(0, 19, 10);
-  camera.lookAt(0, 19, 0);
+  camera.position.set(0, 18, 10);
+  camera.lookAt(0, 18, 0);
   
 
   // lighting
@@ -169,7 +168,9 @@ function createBirdIntesection() {
     const intersects = rayCaster.intersectObjects(birdModels);
 
     if (intersects.length > 0) {
-      console.log(intersects[0].object.name);
+      // console.log(intersects[0].object.name);
+
+      // show image of the bird
     }
   });
 }
@@ -206,13 +207,12 @@ function loadBird(x, y, z, angle, birdName, enableSound = false) {
         audioSource.setRefDistance(3);
         audioSource.setRolloffFactor(2);
         audioSource.setLoop(true);
-        audioSource.play();
+        // audioSource.play();
       });
 
       model.add(audioSource);
     }
-
-    birdNames.push(birdName);
+    
     birdModels.push(model);
   });
 }
@@ -344,7 +344,7 @@ function createControl() {
 }
 
 function loop() {
-  if (birdNames.length == birdNum && !birdIntersection) {
+  if (birdModels.length == birdNum && !birdIntersection) {
     createBirdIntesection();
     birdIntersection = true;
   }
@@ -387,7 +387,7 @@ function loop() {
   // camera y value change from 19 to 10
   if (gameStart){
     if (camera.position.y > 10){
-      camera.position.y = camera.position.y - (camera.position.y - 10) / 30;
+      camera.position.y = camera.position.y - (camera.position.y - 10) / 20;
       camera.updateProjectionMatrix();
     }
   }
