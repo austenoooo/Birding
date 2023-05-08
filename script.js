@@ -82,7 +82,7 @@ function init() {
   
 
   // lighting
-  const light = new THREE.AmbientLight(0xd9ffe2, 0.5); // soft white light
+  const light = new THREE.AmbientLight(0xd9ffe2, 1.5); // soft white light
   scene.add(light);
 
   var hemiLight = new THREE.HemisphereLight(0xffff85, 0xffff85, 0.5);
@@ -155,6 +155,7 @@ function zoomCamera() {
 
     // show binocular
     binocularView.style.opacity = 1;
+    binocularView.style.top = "0vh";
   }
   // camera was zoomed
   else {
@@ -162,6 +163,7 @@ function zoomCamera() {
 
     // hide binocular
     binocularView.style.opacity = 0;
+    binocularView.style.top = "100vh";
   }
 }
 
@@ -183,6 +185,7 @@ function createBirdIntesection() {
       let name = intersects[0].object.name;
       birdImage.src = "./textures/" + name + ".png";
       birdInfo.style.opacity = 1;
+      birdInfo.style.top = "0vh";
       
     }
   });
@@ -277,9 +280,9 @@ function loadForestModel() {
         object.receiveShadow = true;
       }
 
-      loadBird(0, 5, 0, 0, "American_Robin");
-      loadBird(3.2, 6, 4.8, Math.PI / 6, "Northern_Cardinal", true);
-      loadBird(-1, 5, -1, 0, "Blue_Jay");
+      loadBird(0.5, 5, -1, Math.PI / 3, "American_Robin");
+      loadBird(6.3, -3.6, 5, Math.PI / 6, "Northern_Cardinal", true);
+      loadBird(-5, 13, -8, Math.PI / 6, "Blue_Jay");
       loadBird(-1, 5, 0, 0, "Red-winged_Black_Bird", true);
 
 
@@ -317,10 +320,7 @@ function createControl() {
         moveRight = true;
         break;
 
-      // case "Escape":
-      //   ui.style.opacity = 1;
-      //   ui.style.pointerEvents = "auto";
-      //   audioSource.pause();
+      case "Escape":
     }
   };
 
@@ -416,6 +416,8 @@ function loop() {
     Math.round(controls.getObject().position.y),
     Math.round(controls.getObject().position.z)
   );
+
+  console.log(camera.position.x + ", " + camera.position.z);
   
  
   // renderer.render(scene, camera);
@@ -442,6 +444,7 @@ closeButton.addEventListener("click", () => {
   console.log("closing");
 
   birdInfo.style.opacity = 0;
+  birdInfo.style.top = "100vh";
   controls.lock();
  
 });
