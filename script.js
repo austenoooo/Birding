@@ -19,7 +19,8 @@ let scene, camera, renderer, composer;
 let forest;
 let birdModels = [];
 
-let birdNum = 4;
+let birdNum = 24;
+let birdCurrentNum = 0;
 let birdIntersection = false;
 
 let environment;
@@ -39,6 +40,12 @@ const direction = new THREE.Vector3();
 let cameraZoomed = false;
 
 const binocularView = document.getElementById("binocular");
+const startButton = document.getElementById("start-game");
+const startPage = document.getElementById("start-page");
+const birdInfo = document.getElementById("bird-info");
+const birdImage = document.getElementById("bird-info-image");
+const closeButton = document.getElementById("close-button");
+const gameEnvironment = document.getElementById("game-environment");
 
 const postprocessing = {};
 
@@ -54,7 +61,7 @@ function init() {
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap; // default THREE.PCFShadowMap
-  document.getElementById("environment").appendChild(renderer.domElement);
+  document.getElementById("game-environment").appendChild(renderer.domElement);
   // document.body.appendChild(renderer.domElement);
 
   // background color
@@ -163,14 +170,20 @@ function createBirdIntesection() {
   let mouse = new THREE.Vector2(0, 0);
 
   let rayCaster = new THREE.Raycaster();
-  document.addEventListener("click", (e) => {
+  gameEnvironment.addEventListener("click", (e) => {
     rayCaster.setFromCamera(mouse, camera);
     const intersects = rayCaster.intersectObjects(birdModels);
 
     if (intersects.length > 0) {
-      // console.log(intersects[0].object.name);
+      controls.unlock();
+
+      console.log(intersects[0].object.name);
 
       // show image of the bird
+      let name = intersects[0].object.name;
+      birdImage.src = "./textures/" + name + ".png";
+      birdInfo.style.opacity = 1;
+      
     }
   });
 }
@@ -212,7 +225,9 @@ function loadBird(x, y, z, angle, birdName, enableSound = false) {
 
       model.add(audioSource);
     }
-    
+
+    birdCurrentNum += 1;
+
     birdModels.push(model);
   });
 }
@@ -336,7 +351,7 @@ function createControl() {
   document.addEventListener("keydown", onKeyDown);
   document.addEventListener("keyup", onKeyUp);
 
-  document.addEventListener("click", function () {
+  gameEnvironment.addEventListener("click", function () {
     if (gameStart){
       controls.lock();
     }
@@ -344,7 +359,8 @@ function createControl() {
 }
 
 function loop() {
-  if (birdModels.length == birdNum && !birdIntersection) {
+  if (birdCurrentNum == birdNum && !birdIntersection) {
+    
     createBirdIntesection();
     birdIntersection = true;
   }
@@ -414,10 +430,18 @@ init();
 
 
 
-const startButton = document.getElementById("start-game");
-const startPage = document.getElementById("start-page");
+
 
 startButton.addEventListener("click", () => {
     gameStart = true;
     startPage.style.top = "-100vh";
+    controls.lock();
+});
+
+closeButton.addEventListener("click", () => {
+  console.log("closing");
+
+  birdInfo.style.opacity = 0;
+  controls.lock();
+ 
 });

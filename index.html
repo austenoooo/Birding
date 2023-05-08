@@ -59,7 +59,7 @@
 
       #game-frame{
         position: absolute;
-        z-index: -1;
+        /* z-index: -1; */
       }
 
       #start-page{
@@ -106,7 +106,8 @@
         top: 0;
         /* z-index: 2; */
         opacity: 0;
-        transition: opacity 3000ms ease-in-out;
+        transition: opacity 300ms ease-in-out;
+        /* top: 100vh; */
       }
 
       #bird-info-image{
@@ -125,22 +126,26 @@
       }
 
       #close-button{
-        width: 70px;
-        height: 70px;
+        width: 50px;
+        height: 50px;
         border-radius: 50px;
-        border: var(--neo-green) 3px solid;
+        border: var(--neo-green) 2px solid;
         background-color: var(--neo-green-sheer);
         position: absolute;
         top: calc((100vh - 34.3vw) / 2);
         left: calc(80vw + 20px);
         box-shadow: 2px 2px 4px #000000;
       }
+      
+      #close-button:hover{
+        cursor: pointer;
+      }
 
       #close-icon{
-        width: 20px;
-        height: 20px;
-        margin-top: 25px;
-        margin-left: 25px;
+        width: 15px;
+        height: 15px;
+        margin-top: 17.5px;
+        margin-left: 17.5px;
       }
 
     </style>
@@ -164,11 +169,12 @@
 
     <script type="module" src="script.js"></script>
     
-
     <div id="game-frame">
-      <div id="environment"></div>
+      <div id="game-environment"></div>
       <img id="binocular" src="./textures/binocular_2.png">
     </div>
+
+    
 
     <div id="bird-info">
       <img src="./textures/Northern_Cardinal.png" id="bird-info-image">
