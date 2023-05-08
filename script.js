@@ -240,6 +240,7 @@ function loadBird(x, y, z, angle, birdName, enableSound = false) {
         audioSource.setRefDistance(3);
         audioSource.setRolloffFactor(2);
         audioSource.setLoop(true);
+        audioSource.setVolume( 0.8 );
         audioSource.play();
       });
 
