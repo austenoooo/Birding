@@ -77,7 +77,7 @@ function init() {
 
   // camera.position.set(-5.5, 10, 5.5);
   // camera.lookAt(6, 10, -6);
-  camera.position.set(0, 18, 10);
+  camera.position.set(0, 18, 11);
   camera.lookAt(0, 18, 0);
   
 
@@ -191,6 +191,19 @@ function createBirdIntesection() {
   });
 }
 
+function startPageModel(){
+  const gltfLoader = new GLTFLoader();
+
+  gltfLoader.load("./model/American_Robin.gltf", function (gltf) {
+    let model = gltf.scene;
+
+    model.scale.set(0.5, 0.5, 0.5);
+    model.rotation.set(0, Math.PI * 1.3, 0);
+    model.position.set(-1.5, 17, 8.5);
+    scene.add(model);
+  });
+}
+
 function loadBird(x, y, z, angle, birdName, enableSound = false) {
   const gltfLoader = new GLTFLoader();
 
@@ -284,7 +297,7 @@ function loadForestModel() {
       loadBird(3, 14, -4.5, Math.PI, "Northern_Cardinal", true);
       loadBird(-5, 13, -8, Math.PI / 6, "Blue_Jay");
       loadBird(8.2, 9, 6.8, -Math.PI / 6, "Red-winged_Black_Bird", true);
-
+      startPageModel();
 
     });
 
@@ -293,6 +306,8 @@ function loadForestModel() {
     scene.add(forest);
   });
 }
+
+
 
 function createControl() {
   controls = new PointerLockControls(camera, renderer.domElement);
