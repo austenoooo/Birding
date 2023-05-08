@@ -41,11 +41,15 @@ let cameraZoomed = false;
 
 const binocularView = document.getElementById("binocular");
 const startButton = document.getElementById("start-game");
+const startButtonText = document.getElementById("start");
 const startPage = document.getElementById("start-page");
 const birdInfo = document.getElementById("bird-info");
 const birdImage = document.getElementById("bird-info-image");
 const closeButton = document.getElementById("close-button");
 const gameEnvironment = document.getElementById("game-environment");
+const pausePage = document.getElementById("pauese-page");
+const learnImage = document.getElementById("learn-image");
+const gameTitle = document.getElementById("game-title");
 
 const postprocessing = {};
 
@@ -336,6 +340,10 @@ function createControl() {
         break;
 
       case "Escape":
+        // if (gameStart){
+        //   pausePage.style.opacity = 1;
+        //   pausePage.style.top = "0vh";
+        // }
     }
   };
 
@@ -446,13 +454,34 @@ init();
 
 
 
-
+let learnIndex = 0;
 
 
 startButton.addEventListener("click", () => {
+  if (learnIndex == 0){
+    learnImage.style.display = "block";
+    gameTitle.style.display = "none";
+    startButtonText.innerText = "NEXT";
+  }
+
+  if (learnIndex == 1){
+    learnImage.src = "./textures/learn_1.png";
+  }
+
+  if (learnIndex == 2){
+    learnImage.src = "./textures/learn_2.png";
+    startButtonText.innerText = "START BIRDING!";
+    startButton.style.width = "200px";
+    startButton.style.marginLeft = "calc(50vw - 100px)";
+  }
+
+  if (learnIndex == 3){
     gameStart = true;
     startPage.style.top = "-100vh";
     controls.lock();
+  }
+
+  learnIndex += 1;
 });
 
 closeButton.addEventListener("click", () => {

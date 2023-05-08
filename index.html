@@ -39,7 +39,7 @@
       }
 
       body{
-        /* background-color: black; */
+        background-color: #E0FFEF;
         margin: 0;
         padding: 0;
         height: 100%;
@@ -96,10 +96,11 @@
       
       #start{
         margin-top: 8px;
-        margin-left: 30px;
         color: var(--neo-green);
         font-size: 1.2rem;
         font-family: Rubik;
+        text-shadow: 2px 2px 4px #000000;
+        text-align: center;
       }
 
       #bird-info{
@@ -149,6 +150,39 @@
         margin-left: 17.5px;
       }
 
+      #pause-page{
+        position: absolute;
+        opacity: 0;
+        top: 100vh;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 3;
+        transition: opacity 300ms ease-in-out;
+      }
+
+      #game-paused{
+        margin-top: 35vh;
+        font-size: 4rem;
+        color: var(--neo-green);
+        text-align: center;
+        font-weight: 500;
+      }
+
+      #resume{
+        font-size: 2rem;
+        color: var(--neo-green);
+        text-align: center;
+        font-weight: 20;
+      }
+
+      #learn-image{
+        margin-top: 20vh;
+        width: 40vw;
+        margin-left: 30vw;
+        display: none;
+      }
+
     </style>
 
   </head>
@@ -174,8 +208,11 @@
       <div id="game-environment"></div>
       <img id="binocular" src="./textures/binocular_2.png">
     </div>
-
     
+    <div id="pause-page">
+      <h1 id="game-paused">Game Paused</h1>
+      <p id="resume">Click anywhere to <br> resume game</p>
+    </div>
 
     <div id="bird-info">
       <img src="./textures/Northern_Cardinal.png" id="bird-info-image">
@@ -186,6 +223,7 @@
 
     <div id="start-page">
       <h1 id="game-title">BIRDING <br> QUEST</h1>
+      <img src="./textures/learn_0.png" id="learn-image">
       <div id="start-game">
         <p id="start">START</p>
       </div>
