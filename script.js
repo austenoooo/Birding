@@ -86,7 +86,7 @@ function init() {
   
 
   // lighting
-  const light = new THREE.AmbientLight(0xd9ffe2, 2); // soft white light
+  const light = new THREE.AmbientLight(0xd9ffe2, 1.5); // soft white light
   scene.add(light);
 
   var hemiLight = new THREE.HemisphereLight(0xffff85, 0xffff85, 0.5);
